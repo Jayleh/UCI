@@ -10,20 +10,20 @@ Sub stocktotal():
     ticker_total = 0
     
     ' Keep track of location of each ticker for summary table
-    Dim summary_table_row As Integer
+    Dim summary_table_row As Long
     summary_table_row = 2
 
     ' Get last row of worksheet
     Dim lr As Long
-    lr = ThisWorkbook.Sheets("A").Cells(Rows.Count, 1).End(xlUp).Row
+    lr = Cells(Rows.Count, 1).End(xlUp).Row
 
     ' Loop through all tickers
     Dim i As Long
     
     For i = 2 To lr
         
-        If Cells(i + 1, 1) <> Cells(i, 1).Value Then
-            ' Set ticker ticker letter
+        If Cells(i + 1, 1).Value <> Cells(i, 1).Value Then
+            ' Set ticker letter
             ticker = Cells(i, 1).Value
             
             ' Print ticker in summary table
