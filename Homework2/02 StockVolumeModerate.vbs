@@ -1,18 +1,31 @@
 Sub stockTotal():
           
     For Each ws In Worksheets
-        ' Label new column headers and autofit
+        ' Label new column headers
         ws.Range("I1").Value = "Ticker"
-        ws.Range("J1").Value = "Total Stock Volume"
-        ws.Columns("J").AutoFit
-        
+        ws.Range("J1").Value = "Yearly Change"
+        ws.Range("K1").Value = "Percent Change"
+        ws.Range("L1").Value = "Total Stock Volume"
+                
         ' Declare ticker letter
         Dim ticker As String
         
         ' Instantiate ticker total
         Dim ticker_total As Double
         ticker_total = 0
-    
+        
+        ' Instantiate ticker open and close price
+        Dim open_price, close_price As Double
+        open_price = 0
+        close_price = 0
+        
+        ' Instantiate ticker count
+        Dim ticker_count As Long
+        ticker_count = 0
+        
+        ' Declare yearly and percent changes
+        Dim year_change, percent_change As Double
+            
         ' Keep track of location of each ticker for summary table
         Dim summary_table_row As Long
         summary_table_row = 2
@@ -31,16 +44,38 @@ Sub stockTotal():
                 ' Print ticker in summary table
                 ws.Range("I" & summary_table_row).Value = ticker
 
+                ' Increase open and close prices
+                open_price = open_price + ws.Cells(i, 3).Value
+                close_price = close_price + ws.Cells(i, 6).Value
+
+                ' Count the iterations to get the average opening and closing prices
+                ticker_count = ticker_count + 1
+
+                ' Calculate yearly difference
+                year_change = (close_price - open_price) / ticker_count
+
+                ' Print yearly change in summary table
+                ws.Range("J" & summary_table_row).Value = year_change
+                
+                ' Calculate percent change
+                percent_change = (year_change / (open_price / ticker_count)) * 100
+
+                ' Print percent change in summary table
+                ws.Range("K" & summary_table_row).Value = percent_change
+
                 ' Increase ticker total
                 ticker_total = ticker_total + ws.Cells(i, 7).Value
 
-                ' print ticker total in summary table
-                ws.Range("J" & summary_table_row).Value = ticker_total
+                ' Print ticker total in summary table
+                ws.Range("L" & summary_table_row).Value = ticker_total
 
                 ' Increment summary table row
                 summary_table_row = summary_table_row + 1
 
-                ' Reset ticker total
+                ' Reset totals
+                open_price = 0
+                close_price = 0
+                ticker_count = 0
                 ticker_total = 0
             Else
                 ' Default as increase ticker total
@@ -48,7 +83,12 @@ Sub stockTotal():
             End If
 
         Next i
-    
+
+        ' Autofit columns
+        ws.Columns("J").AutoFit
+        ws.Columns("K").AutoFit
+        ws.Columns("L").AutoFit
+
     Next ws
 
 End Sub
