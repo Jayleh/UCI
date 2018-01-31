@@ -10,8 +10,8 @@ Sub stockTotal():
         Dim ticker As String
         
         ' Instantiate ticker total
-        Dim ticker_total As Double
-        ticker_total = 0
+        Dim stock_volume As Double
+        stock_volume = 0
     
         ' Keep track of location of each ticker for summary table
         Dim summary_table_row As Long
@@ -32,19 +32,19 @@ Sub stockTotal():
                 ws.Range("I" & summary_table_row).Value = ticker
 
                 ' Increase ticker total
-                ticker_total = ticker_total + ws.Cells(i, 7).Value
+                stock_volume = stock_volume + ws.Cells(i, 7).Value
 
                 ' print ticker total in summary table
-                ws.Range("J" & summary_table_row).Value = ticker_total
+                ws.Range("J" & summary_table_row).Value = stock_volume
 
                 ' Increment summary table row
                 summary_table_row = summary_table_row + 1
 
                 ' Reset ticker total
-                ticker_total = 0
+                stock_volume = 0
             Else
                 ' Default as increase ticker total
-                ticker_total = ticker_total + ws.Cells(i, 7).Value
+                stock_volume = stock_volume + ws.Cells(i, 7).Value
             End If
 
         Next i

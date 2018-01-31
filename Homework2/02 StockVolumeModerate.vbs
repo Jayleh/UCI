@@ -1,5 +1,7 @@
 Sub stockTotal():
-          
+    
+    Dim ws As Worksheet
+
     For Each ws In Worksheets
         ' Label new column headers
         ws.Range("I1").Value = "Ticker"
@@ -11,8 +13,8 @@ Sub stockTotal():
         Dim ticker As String
         
         ' Instantiate ticker total
-        Dim ticker_total As Double
-        ticker_total = 0
+        Dim stock_volume As Double
+        stock_volume = 0
         
         ' Instantiate ticker open and close prices
         Dim open_price, close_price As Double
@@ -61,10 +63,10 @@ Sub stockTotal():
                 ws.Range("K" & summary_table_row).Value = percent_change
 
                 ' Increase ticker total
-                ticker_total = ticker_total + ws.Cells(i, 7).Value
+                stock_volume = stock_volume + ws.Cells(i, 7).Value
 
                 ' Print ticker total in summary table
-                ws.Range("L" & summary_table_row).Value = ticker_total
+                ws.Range("L" & summary_table_row).Value = stock_volume
 
                 ' Increment summary table row
                 summary_table_row = summary_table_row + 1
@@ -73,13 +75,13 @@ Sub stockTotal():
                 open_price = 0
                 close_price = 0
                 ticker_count = 1
-                ticker_total = 0
+                stock_volume = 0
             Else
                 ' Default as increase ticker total
                 open_price = open_price + ws.Cells(i, 3).Value
                 close_price = close_price + ws.Cells(i, 6).Value
                 ticker_count = ticker_count + 1
-                ticker_total = ticker_total + ws.Cells(i, 7).Value
+                stock_volume = stock_volume + ws.Cells(i, 7).Value
             End If
 
         Next i
@@ -91,6 +93,20 @@ Sub stockTotal():
         
         ' Format column K to percentage
         ws.Columns("K").EntireColumn.NumberFormat = "0.00%"
+
+        ' Conditionaly format yearly change
+        Dim j, summary_table_lr as Long
+        summary_table_lr = ws.Cells(Rows.Count, 1).End(xlUp).Row
+
+        For j = 2 To summary_table_lr
+
+            If ws.Range("J" & j).Value > 0 Then
+                ws.Range("J" & j).Interior.ColorIndex = 10            
+            Else
+                ws.Range("J" & j).Interior.ColorIndex = 9
+            End If
+
+        Next j
 
     Next ws
 
