@@ -1,11 +1,10 @@
-Sub stockTotal():
+Sub stockRun():
           
     For Each ws In Worksheets
-        ' Label new column headers and autofit
+        ' Label new column headers
         ws.Range("I1").Value = "Ticker"
         ws.Range("J1").Value = "Total Stock Volume"
-        ws.Columns("J").AutoFit
-        
+                
         ' Declare ticker letter
         Dim ticker As String
         
@@ -40,14 +39,17 @@ Sub stockTotal():
                 ' Increment summary table row
                 summary_table_row = summary_table_row + 1
 
-                ' Reset ticker total
+                ' Reset total stock volume
                 stock_volume = 0
             Else
-                ' Default as increase ticker total
+                ' Default as increase total stock volume
                 stock_volume = stock_volume + ws.Cells(i, 7).Value
             End If
 
         Next i
+
+        ' Autofit columns
+        ws.Columns("J").AutoFit
     
     Next ws
 

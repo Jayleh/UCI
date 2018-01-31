@@ -1,4 +1,4 @@
-Sub stockTotal():
+Sub stockRun():
     
     Dim ws As Worksheet
 
@@ -12,25 +12,10 @@ Sub stockTotal():
         ' Declare ticker letter
         Dim ticker As String
         
-        ' Instantiate ticker total
+        ' Instantiate stock volume total
         Dim stock_volume As Double
         stock_volume = 0
         
-        ' Declare ticker open and close prices
-        Dim open_price, close_price As Double
-
-        ' Declare open and close rows
-        Dim open_price_row, close_price_row As Long
-        open_price_row = 1
-        close_price_row = 1
-                
-        ' Instantiate ticker count
-        Dim ticker_count As Long
-        ticker_count = 0
-        
-        ' Declare yearly and percent changes
-        Dim year_change, percent_change As Double
-            
         ' Keep track of location of each ticker for summary table
         Dim summary_table_row As Long
         summary_table_row = 2
@@ -48,26 +33,7 @@ Sub stockTotal():
 
                 ' Print ticker in summary table
                 ws.Range("I" & summary_table_row).Value = ticker
-
-                ' Increase close price row
-                close_price_row = close_price_row + 1
-
-                ' Assign open and close prices
-                open_price = ws.Cells(open_price_row + ticker_count, 3).Value
-                ' close_price = ws.Cells(close_price_row + ticker_count, 6).Value
-
-                ' Calculate yearly difference
-                year_change = close_price - open_price
-
-                ' Print yearly change in summary table
-                ws.Range("J" & summary_table_row).Value = open_price
                 
-                ' Calculate percent change
-                percent_change = year_change / open_price
-
-                ' Print percent change in summary table
-                ws.Range("K" & summary_table_row).Value = percent_change
-
                 ' Increase ticker total
                 stock_volume = stock_volume + ws.Cells(i, 7).Value
 
@@ -78,11 +44,9 @@ Sub stockTotal():
                 summary_table_row = summary_table_row + 1
 
                 ' Reset totals
-                ticker_count = 0
                 stock_volume = 0
             Else
-                ' Default as increase ticker total
-                ticker_count = ticker_count + 1
+                ' Default as increase total stock volume
                 stock_volume = stock_volume + ws.Cells(i, 7).Value
             End If
 
@@ -109,6 +73,55 @@ Sub stockTotal():
             End If
 
         Next j
+
+    Next ws
+
+End Sub
+
+
+Sub getOpenPrice():
+
+    Dim ws As Worksheet
+
+    For Each ws in Worksheets
+
+        ' Declare ticker open and close prices
+        Dim open_price, close_price As Double
+
+        ' Declare open and close rows
+        Dim open_price_row, close_price_row As Long
+        open_price_row = 1
+        close_price_row = 1
+
+        ' Instantiate ticker count
+        Dim ticker_count As Long
+        ticker_count = 0
+        
+        ' Declare yearly and percent changes
+        Dim year_change, percent_change As Double
+
+        Dim k, summary_table_lr As Long
+        summary_table_lr = ws.Cells(Rows.Count, 1).End(xlUp).Row
+
+        For k = 2 To lr Then
+
+            ' Increase close price row
+            close_price_row = close_price_row + 1
+
+            ' Assign open and close prices
+            open_price = ws.Cells(open_price_row + ticker_count, 3).Value
+            ' close_price = ws.Cells(close_price_row + ticker_count, 6).Value
+
+            ' Calculate yearly difference
+            year_change = close_price - open_price
+            
+            ' Print yearly change in summary table
+            ws.Range("J" & summary_table_row).Value = open_price
+            
+            ' Reset totals
+            ticker_count = 0
+        
+        Next k
 
     Next ws
 
