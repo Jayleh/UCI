@@ -20,8 +20,9 @@ Sub stockTotal():
         Dim open_price, close_price As Double
 
         ' Declare first row
-        Dim first_row As Long
-        first_row = 1
+        Dim open_price_row, close_price_row As Long
+        open_price_row = 1
+        close_price_row = 1
                 
         ' Instantiate ticker count
         Dim ticker_count As Long
@@ -48,9 +49,12 @@ Sub stockTotal():
                 ' Print ticker in summary table
                 ws.Range("I" & summary_table_row).Value = ticker
 
+                ' Increase close price row
+                close_price_row = close_price_row + 1
+
                 ' Increase open and close prices
-                open_price = ws.Cells(first_row + ticker_count, 3).Value
-                close_price = ws.Cells(ticker_count + ticker_count, 6).Value
+                open_price = ws.Cells(open_price_row + ticker_count, 3).Value
+                close_price = ws.Cells(close_price_row + ticker_count, 6).Value
 
                 ' Calculate yearly difference
                 year_change = close_price - open_price
@@ -74,8 +78,6 @@ Sub stockTotal():
                 summary_table_row = summary_table_row + 1
 
                 ' Reset totals
-                open_price = 0
-                close_price = 0
                 ticker_count = 1
                 stock_volume = 0
             Else
