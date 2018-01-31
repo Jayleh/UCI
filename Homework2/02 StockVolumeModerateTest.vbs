@@ -62,7 +62,7 @@ Sub stockRun():
 
         ' Conditionaly format yearly change
         Dim j, summary_table_lr As Long
-        summary_table_lr = ws.Cells(Rows.Count, 1).End(xlUp).Row
+        summary_table_lr = ws.Cells(Rows.Count, "J").End(xlUp).Row
 
         For j = 2 To summary_table_lr
 
@@ -79,11 +79,11 @@ Sub stockRun():
 End Sub
 
 
-Sub getOpenPrice():
+Sub getClosePrice():
 
     Dim ws As Worksheet
 
-    For Each ws in Worksheets
+    For Each ws In Worksheets
 
         ' Declare ticker open and close prices
         Dim open_price, close_price As Double
@@ -93,34 +93,47 @@ Sub getOpenPrice():
         open_price_row = 1
         close_price_row = 1
 
-        ' Instantiate ticker count
-        Dim ticker_count As Long
-        ticker_count = 0
-        
+        Dim row_num As Long
+        row_num = 1
+
         ' Declare yearly and percent changes
         Dim year_change, percent_change As Double
-
-        Dim k, summary_table_lr As Long
-        summary_table_lr = ws.Cells(Rows.Count, 1).End(xlUp).Row
-
-        For k = 2 To lr Then
-
-            ' Increase close price row
-            close_price_row = close_price_row + 1
-
-            ' Assign open and close prices
-            open_price = ws.Cells(open_price_row + ticker_count, 3).Value
-            ' close_price = ws.Cells(close_price_row + ticker_count, 6).Value
-
-            ' Calculate yearly difference
-            year_change = close_price - open_price
-            
-            ' Print yearly change in summary table
-            ws.Range("J" & summary_table_row).Value = open_price
-            
-            ' Reset totals
-            ticker_count = 0
         
+        ' Keep track of location of each ticker for summary table
+        Dim summary_table_row As Long
+        summary_table_row = 2
+
+        ' For the loop
+        Dim k, lr As Long
+        lr = ws.Cells(Rows.Count, 1).End(xlUp).Row
+
+        For k = 2 To lr
+            ' NOT ALL TICKERS START AND CLOSE AT THE SAME DATE!!!
+            ' NEED TO GRAB RANGE OF EACH TICKER
+            ' GRAB THE MIN VALUE
+            ' THEN GRAB THE PRICES
+            If ws.Cells(k + 1, 1).Value <> ws.Cells(k, 1).Value Then
+                ' Increment ticker quantity
+                row_num = row_num + 1
+
+                ' Grab close price row
+                close_price_row = ws.Range("B" & k).Row
+                
+                ' Grab close price value
+                close_price = ws.Range("F" & close_price_row).Value
+
+                ' Print close price to summary table
+                ws.Range("J" & summary_table_row).Value = close_price
+
+                ' Increment summary table row
+                summary_table_row = summary_table_row + 1
+
+                ' Reset row number
+                row_num = 1
+            Else
+                row_num = row_num + 1
+            End If
+            
         Next k
 
     Next ws
