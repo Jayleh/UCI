@@ -1,4 +1,4 @@
-Sub stockRun():
+Sub stockTotal():
           
     For Each ws In Worksheets
         ' Label new column headers

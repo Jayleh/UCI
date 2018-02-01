@@ -1,7 +1,7 @@
 Sub stockRunAll():
     
     Call stockTotal
-    Call getYearPercentChange
+    Call stockYearPercentChange
 
 End Sub
 
@@ -51,7 +51,7 @@ Sub stockTotal():
                 ' Increment summary table row
                 summary_table_row = summary_table_row + 1
 
-                ' Reset totals
+                ' Reset stock volume total
                 stock_volume = 0
             Else
                 ' Default as increase total stock volume
@@ -65,7 +65,7 @@ Sub stockTotal():
 End Sub
 
 
-Sub getYearPercentChange():
+Sub stockYearPercentChange():
 
     Dim ws As Worksheet
 
@@ -77,7 +77,7 @@ Sub getYearPercentChange():
         ' Declare open and close rows
         Dim open_price_row, close_price_row As Long
         
-        ' Instantiate ticker count
+        ' Instantiate a row count for ticker quantity
         Dim row_count As Long
         row_count = 0
 
@@ -94,14 +94,14 @@ Sub getYearPercentChange():
 
         For j = 2 To lr
             If ws.Cells(j + 1, 1).Value <> ws.Cells(j, 1).Value Then
-                ' Increment ticker count to subtract from close row index
+                ' Calculate row count by subtracting from close row index
                 row_count = j - row_count
 
                 ' Grab close and open price row
                 open_price_row = ws.Range("C" & row_count).Row
                 ' close_price_row = ws.Range("F" & j).Row
                                 
-                ' Grab close and open price value, j is close_price_row
+                ' Grab close and open price value, j is already close_price_row
                 open_price = ws.Range("C" & open_price_row).Value
                 close_price = ws.Range("F" & j).Value
                 
@@ -127,9 +127,10 @@ Sub getYearPercentChange():
                 ' Increment summary table row
                 summary_table_row = summary_table_row + 1
 
-                ' Reset row number
+                ' Reset row count
                 row_count = 0
             Else
+                ' Increment row count
                 row_count = row_count + 1
             End If
             
@@ -141,7 +142,7 @@ Sub getYearPercentChange():
         ws.Columns("L").AutoFit
         
         ' Format column K to percentage
-        ' ws.Columns("K").EntireColumn.NumberFormat = "0.00%"
+        ws.Columns("K").EntireColumn.NumberFormat = "0.00%"
 
         ' Conditionaly format yearly change
         Dim k, summary_table_lr As Long
