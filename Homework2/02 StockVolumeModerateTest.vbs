@@ -90,11 +90,10 @@ Sub getClosePrice():
 
         ' Declare open and close rows
         Dim open_price_row, close_price_row As Long
-        open_price_row = 1
-        close_price_row = 1
-
-        Dim row_num As Long
-        row_num = 1
+        
+        ' Instantiate ticker count
+        Dim row_count As Long
+        row_count = 0
 
         ' Declare yearly and percent changes
         Dim year_change, percent_change As Double
@@ -108,30 +107,29 @@ Sub getClosePrice():
         lr = ws.Cells(Rows.Count, 1).End(xlUp).Row
 
         For k = 2 To lr
-            ' NOT ALL TICKERS START AND CLOSE AT THE SAME DATE!!!
-            ' NEED TO GRAB RANGE OF EACH TICKER
-            ' GRAB THE MIN VALUE
-            ' THEN GRAB THE PRICES
             If ws.Cells(k + 1, 1).Value <> ws.Cells(k, 1).Value Then
-                ' Increment ticker quantity
-                row_num = row_num + 1
+                ' Increment ticker count to subtract from close row index
+                row_count = k - row_count
 
-                ' Grab close price row
-                close_price_row = ws.Range("B" & k).Row
+                ' Grab close and open price row
+                open_price_row = ws.Range("C" & row_count).Row
+                ' close_price_row = ws.Range("F" & k).Row
+                                
+                ' Grab close and open price value, k is close_price_row
+                open_price = ws.Range("C" & open_price_row).Value
+                close_price = ws.Range("F" & k).Value
                 
-                ' Grab close price value
-                close_price = ws.Range("F" & close_price_row).Value
-
                 ' Print close price to summary table
+                ws.Range("K" & summary_table_row).Value = open_price
                 ws.Range("J" & summary_table_row).Value = close_price
-
+                
                 ' Increment summary table row
                 summary_table_row = summary_table_row + 1
 
                 ' Reset row number
-                row_num = 1
+                row_count = 0
             Else
-                row_num = row_num + 1
+                row_count = row_count + 1
             End If
             
         Next k
