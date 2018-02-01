@@ -1,4 +1,4 @@
-Sub stockRun():
+Sub stockTotal():
     
     Dim ws As Worksheet
 
@@ -52,28 +52,6 @@ Sub stockRun():
 
         Next i
 
-        ' Autofit columns
-        ws.Columns("J").AutoFit
-        ws.Columns("K").AutoFit
-        ws.Columns("L").AutoFit
-        
-        ' Format column K to percentage
-        ws.Columns("K").EntireColumn.NumberFormat = "0.00%"
-
-        ' Conditionaly format yearly change
-        Dim j, summary_table_lr As Long
-        summary_table_lr = ws.Cells(Rows.Count, "J").End(xlUp).Row
-
-        For j = 2 To summary_table_lr
-
-            If ws.Range("J" & j).Value > 0 Then
-                ws.Range("J" & j).Interior.ColorIndex = 10
-            Else
-                ws.Range("J" & j).Interior.ColorIndex = 9
-            End If
-
-        Next j
-
     Next ws
 
 End Sub
@@ -103,21 +81,21 @@ Sub getYearlyChange():
         summary_table_row = 2
 
         ' For the loop
-        Dim k, lr As Long
+        Dim j, lr As Long
         lr = ws.Cells(Rows.Count, 1).End(xlUp).Row
 
-        For k = 2 To lr
-            If ws.Cells(k + 1, 1).Value <> ws.Cells(k, 1).Value Then
+        For j = 2 To lr
+            If ws.Cells(k + 1, 1).Value <> ws.Cells(j, 1).Value Then
                 ' Increment ticker count to subtract from close row index
-                row_count = k - row_count
+                row_count = j - row_count
 
                 ' Grab close and open price row
                 open_price_row = ws.Range("C" & row_count).Row
-                ' close_price_row = ws.Range("F" & k).Row
+                ' close_price_row = ws.Range("F" & j).Row
                                 
-                ' Grab close and open price value, k is close_price_row
+                ' Grab close and open price value, j is close_price_row
                 open_price = ws.Range("C" & open_price_row).Value
-                close_price = ws.Range("F" & k).Value
+                close_price = ws.Range("F" & j).Value
                 
                 ' Calculate yearly change value
                 year_change = close_price - open_price
@@ -134,6 +112,28 @@ Sub getYearlyChange():
                 row_count = row_count + 1
             End If
             
+        Next j
+
+        ' Autofit columns
+        ws.Columns("J").AutoFit
+        ws.Columns("K").AutoFit
+        ws.Columns("L").AutoFit
+        
+        ' Format column K to percentage
+        ' ws.Columns("K").EntireColumn.NumberFormat = "0.00%"
+
+        ' Conditionaly format yearly change
+        Dim , summary_table_lr As Long
+        summary_table_lr = ws.Cells(Rows.Count, "J").End(xlUp).Row
+
+        For k = 2 To summary_table_lr
+
+            If ws.Range("J" & k).Value > 0 Then
+                ws.Range("J" & k).Interior.ColorIndex = 10
+            Else
+                ws.Range("J" & k).Interior.ColorIndex = 9
+            End If
+
         Next k
 
     Next ws

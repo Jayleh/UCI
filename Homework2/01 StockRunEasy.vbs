@@ -33,7 +33,7 @@ Sub stockRun():
                 ' Increase ticker total
                 stock_volume = stock_volume + ws.Cells(i, 7).Value
 
-                ' print ticker total in summary table
+                ' Print ticker total in summary table
                 ws.Range("J" & summary_table_row).Value = stock_volume
 
                 ' Increment summary table row
