@@ -1,3 +1,11 @@
+Sub stockRunAll():
+    
+    Call stockTotal
+    Call getYearPercentChange
+
+End Sub
+
+
 Sub stockTotal():
     
     Dim ws As Worksheet
