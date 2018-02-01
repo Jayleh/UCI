@@ -57,7 +57,7 @@ Sub stockTotal():
 End Sub
 
 
-Sub getYearlyChange():
+Sub getYearPercentChange():
 
     Dim ws As Worksheet
 
@@ -85,7 +85,7 @@ Sub getYearlyChange():
         lr = ws.Cells(Rows.Count, 1).End(xlUp).Row
 
         For j = 2 To lr
-            If ws.Cells(k + 1, 1).Value <> ws.Cells(j, 1).Value Then
+            If ws.Cells(j + 1, 1).Value <> ws.Cells(j, 1).Value Then
                 ' Increment ticker count to subtract from close row index
                 row_count = j - row_count
 
@@ -99,10 +99,23 @@ Sub getYearlyChange():
                 
                 ' Calculate yearly change value
                 year_change = close_price - open_price
-
+                
                 ' Print yearly change value
                 ws.Range("J" & summary_table_row).Value = year_change
-                                
+                
+                ' On divide by zero error, resume to next
+                On Error Resume Next
+                If year_change / open_price = True Then
+                    ' Print error value as 0
+                    ws.Range("K" & summary_table_row).Value = 0
+                Else
+                    ' Calculate percent change value
+                    percent_change = year_change / open_price
+                    
+                    ' Print percent change value
+                    ws.Range("K" & summary_table_row).Value = percent_change
+                End If
+                
                 ' Increment summary table row
                 summary_table_row = summary_table_row + 1
 
@@ -123,7 +136,7 @@ Sub getYearlyChange():
         ' ws.Columns("K").EntireColumn.NumberFormat = "0.00%"
 
         ' Conditionaly format yearly change
-        Dim , summary_table_lr As Long
+        Dim k, summary_table_lr As Long
         summary_table_lr = ws.Cells(Rows.Count, "J").End(xlUp).Row
 
         For k = 2 To summary_table_lr
