@@ -79,7 +79,7 @@ Sub stockRun():
 End Sub
 
 
-Sub getClosePrice():
+Sub getYearlyChange():
 
     Dim ws As Worksheet
 
@@ -119,10 +119,12 @@ Sub getClosePrice():
                 open_price = ws.Range("C" & open_price_row).Value
                 close_price = ws.Range("F" & k).Value
                 
-                ' Print close price to summary table
-                ws.Range("K" & summary_table_row).Value = open_price
-                ws.Range("J" & summary_table_row).Value = close_price
-                
+                ' Calculate yearly change value
+                year_change = close_price - open_price
+
+                ' Print yearly change value
+                ws.Range("J" & summary_table_row).Value = year_change
+                                
                 ' Increment summary table row
                 summary_table_row = summary_table_row + 1
 
