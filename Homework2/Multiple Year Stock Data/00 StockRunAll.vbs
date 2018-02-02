@@ -1,3 +1,4 @@
+' Run stockRunAll to run all sub routines
 Sub stockRunAll():
     
     Call stockTotal
