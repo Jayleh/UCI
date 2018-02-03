@@ -1,8 +1,8 @@
 import csv
 import os
+import numpy as np
 
-csv_path = os.path.join(
-    r'D:\UCI Data Analytics Bootcamp\UCI\Homework3\PyBank\raw_data', 'budget_data_1.csv')
+csv_path = os.path.join(os.getcwd(), 'Pybank\\raw_data', 'budget_data_1.csv')
 
 with open(csv_path, 'r', newline='', encoding='utf-8') as csv_file:
 
@@ -10,26 +10,28 @@ with open(csv_path, 'r', newline='', encoding='utf-8') as csv_file:
 
     months = []
     revenue = []
-    total_months = 0
-    total_revenue = 0
+
+    def average(x):
+        return sum(x) / max(len(x))
 
     for line in budget_data:
-        # Count months
-        total_months += 1
-
-        # Append dates into list
-        months.append(line['Date'])
-
         # Format revenue
         line['Revenue'] = int(line['Revenue'])
 
-        # Append revenue into list
+        # Append dict values into list
+        months.append(line['Date'])
         revenue.append(line['Revenue'])
 
-        # Add to total revenue
-        total_revenue = total_revenue + line['Revenue']
+    # With using numpy
+    chg_btwn_months = np.diff(revenue)
+    # chg_btwn_months = [j - i for i, j in zip(revenue[:-1], revenue[1:])]
 
-    print(len(months))
-    print(sum(revenue))
-    print("Total Months: " + str(total_months))
-    print("Total Revenue: " + str(total_revenue))
+    total_months = len(months)
+    total_revenue = sum(revenue)
+    # avg_rev_chg =
+
+    print(f"Total Months: {total_months}")
+    print(f"Total Revenue: ${total_revenue}")
+    print(revenue)
+    print(chg_btwn_months)
+    # print("Average Revenue Change: $" + str(average(chg_btwn_months)))
