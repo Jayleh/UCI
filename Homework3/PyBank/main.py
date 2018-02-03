@@ -4,15 +4,17 @@ import numpy as np
 
 csv_path = os.path.join(os.getcwd(), 'Pybank\\raw_data', 'budget_data_1.csv')
 
+
+def average(x):
+    return float(sum(x) / (len(x)))
+
+
 with open(csv_path, 'r', newline='', encoding='utf-8') as csv_file:
 
     budget_data = csv.DictReader(csv_file, delimiter=',')
 
     months = []
     revenue = []
-
-    def average(x):
-        return sum(x) / max(len(x))
 
     for line in budget_data:
         # Format revenue
@@ -28,10 +30,12 @@ with open(csv_path, 'r', newline='', encoding='utf-8') as csv_file:
 
     total_months = len(months)
     total_revenue = sum(revenue)
-    # avg_rev_chg =
+    avg_rev_chg = average(chg_btwn_months)
+    great_inc = max(chg_btwn_months)
+    great_dec = min(chg_btwn_months)
 
     print(f"Total Months: {total_months}")
     print(f"Total Revenue: ${total_revenue}")
-    print(revenue)
+    print(months)
     print(chg_btwn_months)
-    # print("Average Revenue Change: $" + str(average(chg_btwn_months)))
+    print("Average Revenue Change: " + str(round(avg_rev_chg, 2)))
