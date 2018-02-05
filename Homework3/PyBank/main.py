@@ -56,12 +56,12 @@ with open(csv_path, 'r', newline='', encoding='utf-8') as csv_file:
     print("Financial Analysis\n----------------------------")
     print(f"Total Months: {total_months}")
     print(f"Total Revenue: ${total_revenue}")
-    print("mean Revenue Change: $" + str(round(avg_rev_chg, 2)))
+    print("Average Revenue Change: $" + str(round(avg_rev_chg, 2)))
     print(f"Greatest Increase in Revenue: {great_inc_month} (${great_inc})")
     print(f"Greatest Decrease in Revenue: {great_dec_month} (${great_dec})")
 
     # Declare text file path
-    txt_path = os.path.join(os.getcwd(), 'PyBank', 'Financial Analysis.txt')
+    txt_path = os.path.join(os.getcwd(), 'PyBank\\Financial Analysis', 'budget_data_1.txt')
 
     with open(txt_path, 'w') as txt_file:
 
@@ -69,6 +69,6 @@ with open(csv_path, 'r', newline='', encoding='utf-8') as csv_file:
         txt_file.write("Financial Analysis\n----------------------------\n")
         txt_file.write(f"Total Months: {total_months}\n")
         txt_file.write(f"Total Revenue: ${total_revenue}\n")
-        txt_file.write("mean Revenue Change: $" + str(round(avg_rev_chg, 2)) + "\n")
+        txt_file.write("Average Revenue Change: $" + str(round(avg_rev_chg, 2)) + "\n")
         txt_file.write(f"Greatest Increase in Revenue: {great_inc_month} (${great_inc})\n")
         txt_file.write(f"Greatest Decrease in Revenue: {great_dec_month} (${great_dec})\n")
