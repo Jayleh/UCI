@@ -2,7 +2,7 @@ import csv
 import os
 
 os.chdir(r'D:\UCI Data Analytics Bootcamp\UCI\Homework3')
-csv_path = os.path.join(os.getcwd(), 'PyBank\\raw_data', 'budget_data_1.csv')
+csv_path = os.path.join(os.getcwd(), 'PyBank\\0 raw_data', 'budget_data_1.csv')
 
 
 def mean(x):
