@@ -9,6 +9,14 @@ csv_path = os.path.join(os.getcwd(), 'PyBoss\\0 raw_data', 'employee_data1.csv')
 # csv_path = os.path.join('0 raw_data', 'employee_data1.csv')
 
 
+def split_name(name):
+    if name == '':
+        return None
+    else:
+        name = name.split(" ")
+        return name
+
+
 def parse_date(date):
     if date == '':
         return None
@@ -34,14 +42,6 @@ def parse_state(state):
                 return state
 
 
-def split_name(name):
-    if name == '':
-        return None
-    else:
-        name = name.split(" ")
-        return name
-
-
 with open(csv_path, 'r', newline='', encoding='utf-8') as input_csv:
 
     # Read csv file as data frame
@@ -50,10 +50,10 @@ with open(csv_path, 'r', newline='', encoding='utf-8') as input_csv:
     emp_data = list(csv_reader)
 
     for emp in emp_data:
+        emp['Name'] = split_name(emp['Name'])
         emp['DOB'] = parse_date(emp['DOB'])
         emp['SSN'] = parse_ssn(emp['SSN'])
         emp['State'] = parse_state(emp['State'])
-        emp['Name'] = split_name(emp['Name'])
 
         # Create new column with first name
         first_name = emp['Name'][0]
