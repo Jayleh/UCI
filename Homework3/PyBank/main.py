@@ -56,7 +56,7 @@ with open(csv_path, 'r', newline='', encoding='utf-8') as csv_file:
     print("Financial Analysis\n----------------------------")
     print(f"Total Months: {total_months}")
     print(f"Total Revenue: ${total_revenue}")
-    print("Average Revenue Change: $" + str(round(avg_rev_chg, 2)))
+    print(f"Average Revenue Change: ${round(avg_rev_chg, 2)}")
     print(f"Greatest Increase in Revenue: {great_inc_month} (${great_inc})")
     print(f"Greatest Decrease in Revenue: {great_dec_month} (${great_dec})")
 
@@ -69,6 +69,6 @@ with open(csv_path, 'r', newline='', encoding='utf-8') as csv_file:
         txt_file.write("Financial Analysis\n----------------------------\n")
         txt_file.write(f"Total Months: {total_months}\n")
         txt_file.write(f"Total Revenue: ${total_revenue}\n")
-        txt_file.write("Average Revenue Change: $" + str(round(avg_rev_chg, 2)) + "\n")
+        txt_file.write(f"Average Revenue Change: ${round(avg_rev_chg, 2)}" + "\n")
         txt_file.write(f"Greatest Increase in Revenue: {great_inc_month} (${great_inc})\n")
         txt_file.write(f"Greatest Decrease in Revenue: {great_dec_month} (${great_dec})\n")
