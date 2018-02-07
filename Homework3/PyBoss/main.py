@@ -68,7 +68,7 @@ with open(csv_path, 'r', newline='', encoding='utf-8') as input_csv:
         last_name.append(emp['Name'][1])
 
         # Rename Name to First Name
-        emp['First Name'] = emp.pop('Name')
+        # emp['First Name'] = emp.pop('Name')
 
         # Create new column with last name
         # last_name = emp['Name'][1]
@@ -84,10 +84,8 @@ with open(csv_path, 'r', newline='', encoding='utf-8') as input_csv:
     with open(new_csv_path, 'w') as output_csv:
         # Fieldnames
         headers = ['Emp ID', 'First Name', 'Last Name', 'DOB', 'SSN', 'State']
+
         csv_writer = csv.DictWriter(output_csv, fieldnames=headers, delimiter=',')
 
         # for row in emp_data:
         #     csv_writer.writerow(row)
-
-        # for column in emp_data:
-        #    csv_writer.writerow(column['Emp ID'], column['First Name'], column['Last Name'], column['DOB'], column['SSN'], column['State'])
