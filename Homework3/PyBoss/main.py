@@ -48,44 +48,41 @@ with open(csv_path, 'r', newline='', encoding='utf-8') as input_csv:
     csv_reader = csv.DictReader(input_csv, delimiter=',')
 
     emp_data = list(csv_reader)
+    emp_id = []
     first_name = []
     last_name = []
+    dob = []
+    ssn = []
+    state = []
 
     for emp in emp_data:
+        # Parse columns with parse functions
         emp['Name'] = split_name(emp['Name'])
         emp['DOB'] = parse_date(emp['DOB'])
         emp['SSN'] = parse_ssn(emp['SSN'])
         emp['State'] = parse_state(emp['State'])
 
-        # Append first names to list
+        # Append values to lists
         first_name.append(emp['Name'][0])
-
-        # Create new column with first name
-        # first_name = emp['Name'][0]
-        # emp['First Name'] = first_name
-
-        # Append last names to list
         last_name.append(emp['Name'][1])
-
-        # Rename Name to First Name
-        # emp['First Name'] = emp.pop('Name')
-
-        # Create new column with last name
-        # last_name = emp['Name'][1]
-        # emp['Last Name'] = last_name
-
-    print(emp_data[0])
-    print(first_name[0:4])
-    print(last_name[0:4])
+        emp_id.append(emp['Emp ID'])
+        dob.append(emp['DOB'])
+        ssn.append(emp['SSN'])
+        state.append(emp['State'])
 
     # Declare new csv file path
     new_csv_path = os.path.join(os.getcwd(), 'PyBoss\\Employee Data', 'employee_data1.csv')
 
-    with open(new_csv_path, 'w') as output_csv:
+    with open(new_csv_path, 'w', newline='', encoding='utf-8') as output_csv:
         # Fieldnames
         headers = ['Emp ID', 'First Name', 'Last Name', 'DOB', 'SSN', 'State']
 
-        csv_writer = csv.DictWriter(output_csv, fieldnames=headers, delimiter=',')
+        csv_writer = csv.writer(output_csv, delimiter=',')
 
-        # for row in emp_data:
-        #     csv_writer.writerow(row)
+        # Write headers
+        csv_writer.writerow(headers)
+
+        # Write rows with list items
+        for i in range(0, len(emp_id)):
+            csv_writer.writerow([emp_id[i]] + [first_name[i]] +
+                                [last_name[i]] + [dob[i]] + [ssn[i]] + [state[i]])
