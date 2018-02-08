@@ -28,7 +28,7 @@ with open(csv_path, 'r', newline='', encoding='utf-8') as csv_file:
         months.append(line['Date'])
         revenue.append(line['Revenue'])
 
-    # Loop thru zipped revenue lists
+    # Loop thru zipped list of revenue lists
     for i, j in zip(revenue[:-1], revenue[1:]):
         # Append to monthly revenue change list
         monthly_rev_chg.append(j - i)
