@@ -15,7 +15,7 @@ with open(csv_path, 'r', newline='', encoding='utf-8') as csv_file:
     cand_dict = {}
 
     # Loop to count rows
-    # row_count = sum(1 for row in elect_data)
+    # Can also do row_count = sum(1 for row in elect_data)
     for row in elect_data:
         # Append voter ids to list
         voter_id.append(row['Voter ID'])
