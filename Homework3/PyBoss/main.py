@@ -24,22 +24,22 @@ def parse_date(date):
         return dt.strptime(date, '%Y-%m-%d').strftime('%m/%d/%Y')
 
 
-def parse_ssn(ssn):
-    if ssn == '':
+def parse_ssn(social):
+    if social == '':
         return None
     else:
-        ssn = "***-**" + ssn[-5:]
-        return ssn
+        social = "***-**" + social[-5:]
+        return social
 
 
-def parse_state(state):
-    if state == '':
+def parse_state(st):
+    if st == '':
         return None
     else:
         for key, value in us_state_abbrev.items():
-            if state == key:
-                state = value
-                return state
+            if st == key:
+                st = value
+                return st
 
 
 with open(csv_path, 'r', newline='', encoding='utf-8') as input_csv:

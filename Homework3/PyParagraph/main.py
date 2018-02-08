@@ -34,6 +34,8 @@ with open(txt_path, 'r') as input_txt:
         elif '?' in word:
             sentence_count += 1
 
+    word_count_sent = []
+    count = 0
     for word in para_no_space:
         letter_count_word.append(len(word))
 
