@@ -70,19 +70,19 @@ with open(csv_path, 'r', newline='', encoding='utf-8') as input_csv:
         ssn.append(emp['SSN'])
         state.append(emp['State'])
 
-    # Declare new csv file path
-    new_csv_path = os.path.join(os.getcwd(), 'PyBoss\\Employee Data', 'employee_data1.csv')
+# Declare new csv file path
+new_csv_path = os.path.join(os.getcwd(), 'PyBoss\\Employee Data', 'employee_data1.csv')
 
-    with open(new_csv_path, 'w', newline='', encoding='utf-8') as output_csv:
-        # Fieldnames
-        headers = ['Emp ID', 'First Name', 'Last Name', 'DOB', 'SSN', 'State']
+with open(new_csv_path, 'w', newline='', encoding='utf-8') as output_csv:
+    # Fieldnames
+    headers = ['Emp ID', 'First Name', 'Last Name', 'DOB', 'SSN', 'State']
 
-        csv_writer = csv.writer(output_csv, delimiter=',')
+    csv_writer = csv.writer(output_csv, delimiter=',')
 
-        # Write headers
-        csv_writer.writerow(headers)
+    # Write headers
+    csv_writer.writerow(headers)
 
-        # Write rows with list items
-        for i in range(0, len(emp_id)):
-            csv_writer.writerow([emp_id[i]] + [first_name[i]] +
-                                [last_name[i]] + [dob[i]] + [ssn[i]] + [state[i]])
+    # Write rows with list items
+    for i in range(0, len(emp_id)):
+        csv_writer.writerow([emp_id[i]] + [first_name[i]] +
+                            [last_name[i]] + [dob[i]] + [ssn[i]] + [state[i]])

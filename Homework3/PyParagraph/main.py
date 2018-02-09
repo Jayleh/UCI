@@ -61,14 +61,14 @@ with open(txt_path, 'r') as input_txt:
     print(f'Average Letter Count: {round(mean(letter_count_word), 5)}')
     print(f'Average Sentence Length: {mean(word_count_sent)}')
 
-    # Declare text file path
-    txt_path = os.path.join(
-        os.getcwd(), 'PyParagraph\\Paragraph Analysis', 'paragraph_1.txt')
+# Declare text file path
+txt_path = os.path.join(
+    os.getcwd(), 'PyParagraph\\Paragraph Analysis', 'paragraph_1.txt')
 
-    with open(txt_path, 'w') as txt_file:
+with open(txt_path, 'w') as txt_file:
 
-        txt_file.write('Paragraph Analysis\n-----------------\n')
-        txt_file.write(f'Approximate Word Count: {word_count}\n')
-        txt_file.write(f'Approximate Sentence Count: {sentence_count}\n')
-        txt_file.write(f'Average Letter Count: {round(mean(letter_count_word), 5)}\n')
-        txt_file.write(f'Average Sentence Length: {round(mean(word_count_sent), 1)}')
+    txt_file.write('Paragraph Analysis\n-----------------\n')
+    txt_file.write(f'Approximate Word Count: {word_count}\n')
+    txt_file.write(f'Approximate Sentence Count: {sentence_count}\n')
+    txt_file.write(f'Average Letter Count: {round(mean(letter_count_word), 5)}\n')
+    txt_file.write(f'Average Sentence Length: {round(mean(word_count_sent), 1)}')

@@ -71,9 +71,4 @@ txt_path = os.path.join(os.getcwd(), 'PyBank\\Financial Analysis', 'budget_data_
 with open(txt_path, 'w') as txt_file:
 
     # Write to text file
-    txt_file.write("Financial Analysis\n----------------------------\n")
-    txt_file.write(f"Total Months: {total_months}\n")
-    txt_file.write(f"Total Revenue: ${total_revenue}\n")
-    txt_file.write(f"Average Revenue Change: ${round(avg_rev_chg, 2)}" + "\n")
-    txt_file.write(f"Greatest Increase in Revenue: {great_inc_month} (${great_inc})\n")
-    txt_file.write(f"Greatest Decrease in Revenue: {great_dec_month} (${great_dec})\n")
+    txt_file.write(output)
