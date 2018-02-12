@@ -3,10 +3,11 @@ import csv
 from datetime import datetime as dt
 from us_state_abbrev import us_state_abbrev
 
-os.chdir(r'D:\UCI Data Analytics Bootcamp\UCI\Homework3')
-csv_path = os.path.join(os.getcwd(), 'PyBoss\\0 raw_data', 'employee_data1.csv')
+# os.chdir(r'D:\UCI Data Analytics Bootcamp\UCI\Homework3')
+# csv_path = os.path.join(os.getcwd(), 'PyBoss\\0 raw_data', 'employee_data1.csv')
 
-# csv_path = os.path.join('0 raw_data', 'employee_data1.csv')
+# Path to read csv
+csv_path = os.path.join('0 raw_data', 'employee_data1.csv')
 
 
 def split_name(name):
@@ -71,7 +72,8 @@ with open(csv_path, 'r', newline='', encoding='utf-8') as input_csv:
         state.append(emp['State'])
 
 # Declare new csv file path
-new_csv_path = os.path.join(os.getcwd(), 'PyBoss\\Employee Data', 'employee_data1.csv')
+# new_csv_path = os.path.join(os.getcwd(), 'PyBoss\\Employee Data', 'employee_data1.csv')
+new_csv_path = os.path.join('Employee Data', 'employee_data1.csv')
 
 with open(new_csv_path, 'w', newline='', encoding='utf-8') as output_csv:
     # Fieldnames

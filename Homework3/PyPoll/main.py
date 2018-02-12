@@ -1,13 +1,17 @@
 import csv
 import os
 
+
+# os.chdir(r'D:\UCI Data Analytics Bootcamp\UCI\Homework3')
+# csv_path = os.path.join(os.getcwd(), 'PyPoll\\0 raw_data', 'election_data_1.csv')
+
 # Set csv path
-os.chdir(r'D:\UCI Data Analytics Bootcamp\UCI\Homework3')
-csv_path = os.path.join(os.getcwd(), 'PyPoll\\0 raw_data', 'election_data_1.csv')
+csv_path = os.path.join('0 raw_data', 'election_data_1.csv')
+
 
 # Path to write to text file
-txt_path = os.path.join(os.getcwd(), 'PyPoll\\Election Results', 'election_data_1.txt')
-
+# txt_path = os.path.join(os.getcwd(), 'PyPoll\\Election Results', 'election_data_1.txt')
+txt_path = os.path.join('Election Results', 'election_data_1.txt')
 
 with open(csv_path) as csv_file, open(txt_path, 'w') as txt_file:
     elect_data = csv.DictReader(csv_file)

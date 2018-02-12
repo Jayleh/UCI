@@ -1,8 +1,11 @@
 import csv
 import os
 
-os.chdir(r'D:\UCI Data Analytics Bootcamp\UCI\Homework3')
-csv_path = os.path.join(os.getcwd(), 'PyBank\\0 raw_data', 'budget_data_1.csv')
+# os.chdir(r'D:\UCI Data Analytics Bootcamp\UCI\Homework3')
+# csv_path = os.path.join(os.getcwd(), 'PyBank\\0 raw_data', 'budget_data_1.csv')
+
+# Path the read csv
+csv_path = os.path.join('0 raw_data', 'budget_data_1.csv')
 
 
 def mean(x):
@@ -66,7 +69,8 @@ with open(csv_path, 'r', newline='', encoding='utf-8') as csv_file:
     print(summary)
 
 # Declare text file path
-txt_path = os.path.join(os.getcwd(), 'PyBank\\Financial Analysis', 'budget_data_1.txt')
+# txt_path = os.path.join(os.getcwd(), 'PyBank\\Financial Analysis', 'budget_data_1.txt')
+txt_path = os.path.join('Financial Analysis', 'budget_data_1.txt')
 
 with open(txt_path, 'w') as txt_file:
 

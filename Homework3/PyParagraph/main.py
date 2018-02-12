@@ -1,10 +1,11 @@
 import os
 import re
 
-os.chdir(r'D:\UCI Data Analytics Bootcamp\UCI\Homework3')
-txt_path = os.path.join(os.getcwd(), 'PyParagraph\\0 raw_data', 'paragraph_1.txt')
+# os.chdir(r'D:\UCI Data Analytics Bootcamp\UCI\Homework3')
+# txt_path = os.path.join(os.getcwd(), 'PyParagraph\\0 raw_data', 'paragraph_1.txt')
 
-# txt_path = os.path.join('0 raw_data', 'paragraph_1.txt')
+# Path to read text file
+txt_path = os.path.join('0 raw_data', 'paragraph_1.txt')
 
 
 def mean(x):
@@ -55,9 +56,9 @@ with open(txt_path, 'r') as txt_data:
     print(summary)
 
 # Declare text file path
-txt_path = os.path.join(
-    os.getcwd(), 'PyParagraph\\Paragraph Analysis', 'paragraph_1.txt')
+# output_txt_path = os.path.join(os.getcwd(), 'PyParagraph\\Paragraph Analysis', 'paragraph_1.txt')
+output_txt_path = os.path.join('Paragraph Analysis', 'paragraph_1.txt')
 
-with open(txt_path, 'w') as txt_file:
+with open(output_txt_path, 'w') as txt_file:
 
     txt_file.write(summary)
