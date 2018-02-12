@@ -1,107 +1,76 @@
 import csv
 import os
 
+# Set csv path
 os.chdir(r'D:\UCI Data Analytics Bootcamp\UCI\Homework3')
 csv_path = os.path.join(os.getcwd(), 'PyPoll\\0 raw_data', 'election_data_1.csv')
 
-with open(csv_path, 'r', newline='', encoding='utf-8') as csv_file:
+# Path to write to text file
+txt_path = os.path.join(os.getcwd(), 'PyPoll\\Election Results', 'election_data_1.txt')
 
-    # Read csv file as dictionary
-    elect_data = csv.DictReader(csv_file, delimiter=',')
 
-    # Create lists/dictionaries
-    voter_id = []
-    candidates = set()
-    cand_dict = {}
+with open(csv_path) as csv_file, open(txt_path, 'w') as txt_file:
+    elect_data = csv.DictReader(csv_file)
 
-    # Loop to count rows
-    # Can also do row_count = sum(1 for row in elect_data)
+    # Assign variables
+    total_votes = 0
+    candidate_options = []
+    candidate_votes = {}
+    winning_count = 0
+    winner = ""
+    voter_summary = []
+
     for row in elect_data:
-        # Append voter ids to list
-        voter_id.append(row['Voter ID'])
-        candidates.add(row['Candidate'])
+        # Increment total votes
+        total_votes += 1
 
-    # Create sorted list of unique candidates
-    candidates = sorted(list(candidates))
+        # Assign candidate row values to a variable to loop with
+        candidate_name = row['Candidate']
 
-    # Create candidate dictionary
-    for i, cand in enumerate(candidates):
-        # Add key value pairs to candidate dictionary
-        cand_dict["cand%d" % i] = cand
+        if candidate_name not in candidate_options:
+            # Append candidate name if not in candidate options list
+            candidate_options.append(candidate_name)
 
-    # Read csv file again
-    with open(csv_path, 'r', newline='', encoding='utf-8') as csv_file:
+            # Assign candidate_votes dict key and instantiate each candidates' total votes
+            candidate_votes[candidate_name] = 0
 
-        # Read csv file as dictionary
-        elect_data = csv.DictReader(csv_file, delimiter=',')
+        # Increment each candidates' votes
+        candidate_votes[candidate_name] += 1
 
-        # Instantiate candidate counts
-        cand0_count = 0
-        cand1_count = 0
-        cand2_count = 0
-        cand3_count = 0
+    # Print to console
+    print("Election Results\n-----------------------")
+    print(f"Total Votes: {total_votes}\n-----------------------")
 
-        for row in elect_data:
-            if row['Candidate'] == cand_dict['cand0']:
-                cand0_count += 1
-            elif row['Candidate'] == cand_dict['cand1']:
-                cand1_count += 1
-            elif row['Candidate'] == cand_dict['cand2']:
-                cand2_count += 1
-            elif row['Candidate'] == cand_dict['cand3']:
-                cand3_count += 1
+    # Write to text file
+    txt_file.write("Election Results\n-----------------------\n")
+    txt_file.write(f"Total Votes: {total_votes}\n-----------------------\n")
 
-        # Declare variables
-        total_votes = len(voter_id)
-        cand0_percentage = round((cand0_count / total_votes)*100, 1)
-        cand1_percentage = round((cand1_count / total_votes)*100, 1)
-        cand2_percentage = round((cand2_count / total_votes)*100, 1)
-        cand3_percentage = round((cand3_count / total_votes)*100, 1)
+    # Loop through candiate_votes dictionary
+    for candidate in candidate_votes:
+        # Use get method to grab each candidate's vote count
+        votes = candidate_votes.get(candidate)
 
-        '''
-        cand_perc_vote_dict = {cand_dict['cand0']: [cand0_percentage, cand0_count],
-                               cand_dict['cand1']: [cand1_percentage, cand1_count],
-                               cand_dict['cand2']: [cand2_percentage, cand2_count],
-                               cand_dict['cand3']: [cand3_percentage, cand3_count]}
-        '''
+        # Calculate vote percentages
+        vote_percentage = float(votes) / float(total_votes) * 100
 
-        # Create candidate votes list
-        cand_votes = [cand0_count, cand1_count, cand2_count, cand3_count]
+        # Determine winner
+        if votes > winning_count:
+            winning_count = votes
+            winner = candidate
 
-        # for value in cand_dict:
-        #     cand_perc_vote_dict[cand_dict[f'{value}']] = 123
+        # Append summary of each voter to voter summary list
+        voter_summary.append(f"{candidate}: {vote_percentage:.1f}% ({votes})")
 
-        max_vote = max(cand_votes)
+    # For loop to print voter summary from list
+    for voter in voter_summary:
+        print(voter, end='\n')
+        txt_file.write(voter + '\n')
 
-        index = -1
-        for i in cand_votes:
-            index += 1
-            if i == max_vote:
-                # Declare winner
-                winner = candidates[index]
+    # Declare winner
+    winner = f"-----------------------\nWinner: {winner}\n"
 
-        # Print results
-        print("Election Results\n------------------------")
-        print(f"Total Votes: {total_votes}")
-        print("------------------------")
-        print(cand_dict['cand0'] + f": {cand0_percentage}% ({cand0_count})")
-        print(cand_dict['cand1'] + f": {cand1_percentage}% ({cand1_count})")
-        print(cand_dict['cand2'] + f": {cand2_percentage}% ({cand2_count})")
-        print(cand_dict['cand3'] + f": {cand3_percentage}% ({cand3_count})")
-        print("------------------------")
-        print(f"Winner: {winner}\n------------------------")
+    # Print winner to console
+    print(winner)
 
-        # Declare text file path
-        txt_path = os.path.join(os.getcwd(), 'PyPoll\\Election Results', 'election_data_1.txt')
-
-        with open(txt_path, 'w') as txt_file:
-
-            txt_file.write("Election Results\n------------------------\n")
-            txt_file.write(f"Total Votes: {total_votes}\n")
-            txt_file.write("------------------------\n")
-            txt_file.write(cand_dict['cand0'] + f": {cand0_percentage}% ({cand0_count})\n")
-            txt_file.write(cand_dict['cand1'] + f": {cand1_percentage}% ({cand1_count})\n")
-            txt_file.write(cand_dict['cand2'] + f": {cand2_percentage}% ({cand2_count})\n")
-            txt_file.write(cand_dict['cand3'] + f": {cand3_percentage}% ({cand3_count})\n")
-            txt_file.write("------------------------\n")
-            txt_file.write(f"Winner: {winner}\n------------------------")
+    # Write winner to text file
+    txt_file.write(winner)
