@@ -1,5 +1,5 @@
 import os
-# import re
+import re
 
 os.chdir(r'D:\UCI Data Analytics Bootcamp\UCI\Homework3')
 txt_path = os.path.join(os.getcwd(), 'PyParagraph\\0 raw_data', 'paragraph_1.txt')
@@ -11,55 +11,48 @@ def mean(x):
     return float(sum(x) / (len(x)))
 
 
-with open(txt_path, 'r') as input_txt:
-
-        # Read text file
-    para = input_txt.read()
+with open(txt_path, 'r') as txt_data:
+    # Read text file
+    paragraph = txt_data.read().replace("\n", " ")
 
     # Split paragraph by spaces
-    para_no_space = para.split(' ')
+    para_split = paragraph.split(' ')
 
     # Declare variables
-    word_count = len(para_no_space)
-    sentence_count = 0
+    word_count = len(para_split)
     letter_count_word = []
 
-    # re.split("(?&lt;=[.!?]) +", para)
+    for word in para_split:
+        # Append length of each word into list
+        letter_count_word.append(len(word))
 
-    for word in para:
-        if '.' in word:
-            sentence_count += 1
-        elif '!' in word:
-            sentence_count += 1
-        elif '?' in word:
-            sentence_count += 1
+    # Calculate average letter count per word
+    avg_letter_count = mean(letter_count_word)
+
+    # Split paragraph by sentences into a list
+    sentence_split = re.split("(?<=[.!?]) +", paragraph)
+
+    # Get number of sentences
+    sentence_count = len(sentence_split)
 
     # Create list for word count for each sentence
     word_count_sent = []
 
-    count = 0
-    for word in para_no_space:
-        # Append length of each word into list
-        letter_count_word.append(len(word))
+    for sentence in sentence_split:
+        # Append sentence lengths to list
+        word_count_sent.append(len(sentence.split(" ")))
 
-        # Increment count for each word
-        count += 1
+    avg_sentence_len = mean(word_count_sent)
 
-        # Loop to reset count at end of sentence
-        if '.' in word:
-            # Append word count of each sentence into list
-            word_count_sent.append(count)
+    summary = (
+        f"Paragraph Analysis\n------------------\n"
+        f"Approximate Word Count: {word_count}\n"
+        f"Approximate Sentence Count: {sentence_count}\n"
+        f"Average Letter Count: {avg_letter_count:.5f}\n"
+        f"Average Sentence Length {avg_sentence_len:.1f}\n"
+    )
 
-            # Reset count
-            count = 0
-
-    # print(para_no_space)
-    # print(word_count_sent)
-    print('Paragraph Analysis\n-----------------')
-    print(f'Approximate Word Count: {word_count}')
-    print(f'Approximate Sentence Count: {sentence_count}')
-    print(f'Average Letter Count: {round(mean(letter_count_word), 5)}')
-    print(f'Average Sentence Length: {mean(word_count_sent)}')
+    print(summary)
 
 # Declare text file path
 txt_path = os.path.join(
@@ -67,8 +60,4 @@ txt_path = os.path.join(
 
 with open(txt_path, 'w') as txt_file:
 
-    txt_file.write('Paragraph Analysis\n-----------------\n')
-    txt_file.write(f'Approximate Word Count: {word_count}\n')
-    txt_file.write(f'Approximate Sentence Count: {sentence_count}\n')
-    txt_file.write(f'Average Letter Count: {round(mean(letter_count_word), 5)}\n')
-    txt_file.write(f'Average Sentence Length: {round(mean(word_count_sent), 1)}')
+    txt_file.write(summary)
